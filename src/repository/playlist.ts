@@ -21,3 +21,9 @@ export const getList = async (name: string): Promise<string[]> => {
 export const addList = async (name: string, items: string[]) => {
   await redisClient.set(name, JSON.stringify(items));
 };
+
+export const addItemToList = async (name: string, newItem: string) => {
+  const data = await redisClient.get(name);
+  const list = data ? JSON.parse(data) : [];
+  await redisClient.set(name, JSON.stringify([...list, newItem]));
+}
