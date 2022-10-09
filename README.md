@@ -56,3 +56,9 @@ Then run the player with
 ```sh
 npm start
 ```
+
+If you still have the management ui running, enter "Y" to start the content player on another port.
+
+Then add the name of your playlist to the url. For example if you have a list named **myList**, and the content player is on port 3001, enter `localhost:3001/myList` in the url bar
+
+
