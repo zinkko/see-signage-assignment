@@ -3,8 +3,8 @@ import { getList } from "../repository/playlist";
 
 const router = express.Router();
 
-router.get("/:id", (req, res) => {
-  res.send(getList(req.params.id));
+router.get("/:id", async (req, res) => {
+  res.send(await getList(req.params.id));
 });
 
 export default router;

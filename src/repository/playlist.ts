@@ -1,19 +1,23 @@
-const data: Record<string, string[]> = {
-  test: [
-    "https://imgs.xkcd.com/comics/easy_or_hard.png",
-    "https://imgs.xkcd.com/comics/archimedes_principle.png",
-    "https://imgs.xkcd.com/comics/movie_ages.png",
-  ],
-};
+import { redisClient } from "../index";
 
-export const getAll = () => {
+export const getAll = async () => {
+  const keys = await redisClient.keys("*");
+  const data: Record<string, string[]> = {};
+  for (let key of keys) {
+    const value = await redisClient.get(key);
+    data[key] = JSON.parse(value as string);
+  }
+  console.log('get data:', data);
   return data;
 };
 
-export const getList = (name: string): string[] => {
-  return data[name] ?? [];
+export const getList = async (name: string): Promise<string[]> => {
+  const data = await redisClient.get(name);
+  if (!data) return [];
+
+  return JSON.parse(data);
 };
 
-export const addList = (name: string, items: string[]) => {
-  data[name] = items;
+export const addList = async (name: string, items: string[]) => {
+  await redisClient.set(name, JSON.stringify(items));
 };

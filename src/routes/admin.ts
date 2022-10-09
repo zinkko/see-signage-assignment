@@ -5,8 +5,8 @@ import { addList, getAll } from "../repository/playlist";
 const router = express.Router();
 const jsonParser = bodyParser.json();
 
-router.get("/playlist", (req, res) => {
-  res.send(getAll());
+router.get("/playlist", async (req, res) => {
+  res.send(await getAll());
 });
 
 router.post("/playlist", jsonParser, (req, res) => {
