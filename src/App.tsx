@@ -10,7 +10,7 @@ const getPageComponent = (page: Page, setPage: React.Dispatch<React.SetStateActi
   switch (page) {
     case Page.Home: return <Home setPage={setPage} />;
     case Page.Create: return <CreateList setPage={setPage} />;
-    case Page.Edit: return <EditList />;
+    case Page.Edit: return <EditList name={'potato'} setPage={setPage} />;
   }
 }
 
