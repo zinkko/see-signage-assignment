@@ -1,11 +1,12 @@
 import { AddIcon } from "@chakra-ui/icons";
 import { Box, Button, Flex, Heading, Input, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
+import { PageData } from "../App";
 import { Page } from "../PageEnum";
 
 interface EditListProps {
     name: string;
-    setPage: React.Dispatch<React.SetStateAction<Page>>;
+    setPage: React.Dispatch<React.SetStateAction<PageData>>;
 }
 
 export const EditList = ({ name, setPage }: EditListProps) => {
@@ -37,7 +38,7 @@ export const EditList = ({ name, setPage }: EditListProps) => {
 
     return (
         <Box p='5%'>
-            <Button onClick={() => setPage(Page.Home)} marginBottom={8}>Home</Button>
+            <Button onClick={() => setPage({ page: Page.Home })} marginBottom={8}>Home</Button>
             <Heading>List {name}</Heading>
             {items.length === 0 && 'Loading...'}
             <Flex direction='column'>

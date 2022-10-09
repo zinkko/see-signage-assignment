@@ -2,9 +2,10 @@ import { Box, Button, Center, Flex, Heading, IconButton, Input, Text } from "@ch
 import { AddIcon } from '@chakra-ui/icons';
 import { useState } from "react";
 import { Page } from "../PageEnum";
+import { PageData } from "../App";
 
 interface CreatePageProps {
-    setPage: React.Dispatch<React.SetStateAction<Page>>;
+    setPage: React.Dispatch<React.SetStateAction<PageData>>;
 }
 
 export const CreateList = ({ setPage }: CreatePageProps) => {
@@ -56,7 +57,10 @@ export const CreateList = ({ setPage }: CreatePageProps) => {
             <Center marginTop={16}>
                 <Button onClick={() => {
                     createList();
-                    setPage(Page.Home);
+                    setPage({
+                        page: Page.Edit,
+                        props: { name: listName }
+                    });
                 }}>Create</Button>
             </Center>
         </Box>
