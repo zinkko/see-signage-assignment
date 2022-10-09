@@ -1,11 +1,5 @@
 import React from "react";
 
-const testData = [
-    'https://imgs.xkcd.com/comics/easy_or_hard.png',
-    'https://imgs.xkcd.com/comics/archimedes_principle.png',
-    'https://imgs.xkcd.com/comics/movie_ages.png',
-]
-
 const INTERVAL = 7000;
 interface ContentPlayerState {
     loading: boolean;
@@ -33,7 +27,9 @@ export class ContentPlayer extends React.Component<{}, ContentPlayerState> {
     }
 
     async fetchPlaylist() {
-        const response = await fetch('http://localhost:8080/playlist/0');
+        const urlParts = window.location.href.split('/');
+        const name = urlParts[urlParts.length-1];
+        const response = await fetch(`http://localhost:8080/playlist/${name}`);
         const playlist = await response.json();
         this.setState({
             loading: false,
