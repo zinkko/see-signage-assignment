@@ -1,5 +1,5 @@
-import { AddIcon } from "@chakra-ui/icons";
-import { Box, Button, Flex, Heading, Input, Text } from "@chakra-ui/react";
+import { AddIcon, CloseIcon } from "@chakra-ui/icons";
+import { Box, Button, Flex, Heading, IconButton, Input, Text } from "@chakra-ui/react";
 import { useEffect, useState } from "react";
 import { PageData } from "../App";
 import { Page } from "../PageEnum";
@@ -36,14 +36,34 @@ export const EditList = ({ name, setPage }: EditListProps) => {
         setItems([...items, newItem]);
     }
 
+    const removeItem = async (item: string) => {
+        const newItems = items.filter(i => i !== item);
+        await fetch(`http://localhost:8080/admin/playlist/${name}`, {
+            method: 'PUT',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify(newItems),
+        });
+        setItems(newItems);
+    }
+
     return (
         <Box p='5%'>
             <Button onClick={() => setPage({ page: Page.Home })} marginBottom={8}>Home</Button>
             <Heading>List {name}</Heading>
             {items.length === 0 && 'Loading...'}
             <Flex direction='column'>
-                {items.map(i => {
-                    return <Text key={i}>{i}</Text>
+                {items.map(item => {
+                    return (
+                        <Flex key={item} justifyContent='space-between'>
+                            <Text>{item}</Text>
+                            <IconButton
+                                onClick={() => removeItem(item)}
+                                aria-label='Remove item' icon={<CloseIcon/>}
+                            />
+                        </Flex>
+                    );
                 })}
             </Flex>
             <Heading marginTop={16} marginBottom={4} size='l'>Add new item to {name}</Heading>
