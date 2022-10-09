@@ -24,20 +24,24 @@ export const EditList = ({ name, setPage }: EditListProps) => {
     }, []);
 
     const addItem = () => {
+        console.log('add: ', newItem);
         fetch(`http://localhost:8080/admin/playlist/${name}`, {
             method: 'POST',
             headers: {
                 'Content-Type': 'application/json',
             },
             body: JSON.stringify({
-                item: newItem,
+                newItem,
             }),
         });
         setItems([...items, newItem]);
+        setNewItem('');
     }
 
-    const removeItem = async (item: string) => {
-        const newItems = items.filter(i => i !== item);
+    const removeItem = async (index: number) => {
+        const newItems = [...items];
+        newItems.splice(index, 1);
+
         await fetch(`http://localhost:8080/admin/playlist/${name}`, {
             method: 'PUT',
             headers: {
@@ -54,12 +58,12 @@ export const EditList = ({ name, setPage }: EditListProps) => {
             <Heading>List {name}</Heading>
             {items.length === 0 && 'Loading...'}
             <Flex direction='column'>
-                {items.map(item => {
+                {items.map((item, idx) => {
                     return (
-                        <Flex key={item} justifyContent='space-between'>
+                        <Flex key={`${item}-${idx}`} justifyContent='space-between'>
                             <Text>{item}</Text>
                             <IconButton
-                                onClick={() => removeItem(item)}
+                                onClick={() => removeItem(idx)}
                                 aria-label='Remove item' icon={<CloseIcon/>}
                             />
                         </Flex>
