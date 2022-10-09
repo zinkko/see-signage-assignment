@@ -1,9 +1,12 @@
 import express, { Express, Request, Response } from "express";
 import PlaylistRoute from "./routes/playlist";
 import AdminRoute from "./routes/admin";
+import cors from "cors";
 
 const app: Express = express();
 const port = 8080;
+
+app.use(cors());
 
 app.get("/", (req: Request, res: Response) => {
   res.send("Hello World!");
