@@ -1,8 +1,13 @@
 import { Box, Button, Center, Flex, Heading, IconButton, Input, Text } from "@chakra-ui/react";
 import { AddIcon } from '@chakra-ui/icons';
 import { useState } from "react";
+import { Page } from "../PageEnum";
 
-export const CreateList = () => {
+interface CreatePageProps {
+    setPage: React.Dispatch<React.SetStateAction<Page>>;
+}
+
+export const CreateList = ({ setPage }: CreatePageProps) => {
     const [listName, setListName] = useState('');
     const [items, setItems] = useState<string[]>([]);
     const [nextItem, setNextItem] = useState('');
@@ -12,8 +17,17 @@ export const CreateList = () => {
         setNextItem('');
     }
 
-    const createList = () => {
-
+    const createList = async () => {
+        await fetch('http://localhost:8080/admin/playlist', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                name: listName,
+                items,
+            }),
+        });
     }
 
     return (
@@ -40,7 +54,10 @@ export const CreateList = () => {
                 />
             </Flex>
             <Center marginTop={16}>
-                <Button onClick={createList}>Create</Button>
+                <Button onClick={() => {
+                    createList();
+                    setPage(Page.Home);
+                }}>Create</Button>
             </Center>
         </Box>
     );

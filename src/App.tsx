@@ -9,7 +9,7 @@ import { Page } from './PageEnum';
 const getPageComponent = (page: Page, setPage: React.Dispatch<React.SetStateAction<Page>>) => {
   switch (page) {
     case Page.Home: return <Home setPage={setPage} />;
-    case Page.Create: return <CreateList />;
+    case Page.Create: return <CreateList setPage={setPage} />;
     case Page.Edit: return <EditList />;
   }
 }
