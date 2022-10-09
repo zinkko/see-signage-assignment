@@ -1,10 +1,10 @@
 import express from "express";
-import { getData } from "../repository/playlist";
+import { getList } from "../repository/playlist";
 
 const router = express.Router();
 
 router.get("/:id", (req, res) => {
-  res.send(getData());
+  res.send(getList(req.params.id));
 });
 
 export default router;
