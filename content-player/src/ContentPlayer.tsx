@@ -50,7 +50,7 @@ export class ContentPlayer extends React.Component<{}, ContentPlayerState> {
 
     render () {
         if (this.state.loading) {
-            return 'Loading...';
+            return 'Loading... (make sure url ends with listname e.g. localhost:3000/myList)';
         }
 
         const source = this.state.playlist[this.state.index];
